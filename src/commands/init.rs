@@ -23,15 +23,14 @@ pub fn init(
     let manifest = Manifest::generate(
         name.to_string(),
         Some(target_type),
-        config_path,
+        &config_path,
         initialized_site,
     )?;
     message::success("Succesfully created a `wrangler.toml`");
 
     if site {
         let env = None;
-        let release = false;
-        let target = manifest.get_target(env, release)?;
+        let target = manifest.get_target(env)?;
         commands::build::wranglerjs::scaffold_site_worker(&target)?;
     }
     Ok(())
